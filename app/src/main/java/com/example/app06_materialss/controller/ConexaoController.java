@@ -1,5 +1,6 @@
 
 package com.example.app06_materialss.controller;
+import com.example.app06_materialss.BuildConfig;
 
 import br.com.autopeca360.dominio.Fornecedor;
 import br.com.autopeca360.dominio.Peca;
@@ -70,7 +71,9 @@ public class ConexaoController {
 
         executor.execute(() -> {
             try {
-                cliente = new Socket("192.168.3.10", 12345);
+                String ipServidor = BuildConfig.SERVER_HOST_IP;
+
+                cliente = new Socket(ipServidor, 12345);
                 out = new ObjectOutputStream(cliente.getOutputStream());
                 in = new ObjectInputStream(cliente.getInputStream());
 

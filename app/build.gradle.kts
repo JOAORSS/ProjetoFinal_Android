@@ -1,10 +1,32 @@
+import java.net.Inet4Address
+import java.net.NetworkInterface
+
 plugins {
     alias(libs.plugins.android.application)
+}
+
+fun getHostLanIp(): String {
+    try {
+        val interfaces = NetworkInterface.getNetworkInterfaces().toList()
+        for (iface in interfaces) {
+            if (iface.isLoopback || !iface.isUp) continue
+
+            for (addr in iface.inetAddresses.toList()) {
+                if (addr is Inet4Address && addr.isSiteLocalAddress) {
+                    return addr.hostAddress
+                }
+            }
+        }
+    } catch (e: Exception) {
+        println("Erro ao detectar IP: ${e.message}")
+    }
+    return "10.0.2.2"
 }
 
 android {
     namespace = "com.example.app06_materialss"
     compileSdk = 36
+    buildFeatures.buildConfig = true
 
     defaultConfig {
         applicationId = "com.example.app06_materialss"
@@ -17,6 +39,25 @@ android {
     }
 
     buildTypes {
+        getByName("debug") {
+            val hostIp = getHostLanIp()
+
+            println("=======================================================")
+            println("==> IP do Servidor Host (Debug): $hostIp")
+            println("=======================================================")
+
+            buildConfigField("String", "SERVER_HOST_IP", "\"$hostIp\"")
+        }
+
+        getByName("release") {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            buildConfigField("String", "SERVER_HOST_IP", "\"ip_do_servidor_de_producao.com\"")
+        }
+
         release {
             isMinifyEnabled = false
             proguardFiles(
