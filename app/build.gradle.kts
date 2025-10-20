@@ -75,20 +75,21 @@ android {
 dependencies {
 
     implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.activity)
+    implementation(libs.google.material)
+    implementation(libs.androidx.activity)
     implementation(libs.constraintlayout)
     implementation(libs.room.common.jvm)
     implementation(files("./libs/Autopeca360-dominio.jar"))
-    implementation(libs.core.splashscreen)
+    implementation(libs.androidx.core.splashscreen)
     implementation(libs.glide)
+    implementation(libs.google.material)
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.activity)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation(libs.room.runtime)
     implementation(libs.room.guava)
-
-    val room_version = "2.8.2"
-    implementation("androidx.room:room-runtime:$room_version");
-    annotationProcessor("androidx.room:room-runtime:$room_version");
+    implementation(libs.room.runtime);
+    annotationProcessor(libs.room.runtime);
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:id="@+id/main_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,71 +9,43 @@
     android:background="@color/md_theme_secondary"
     tools:context=".activity.MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:background="@color/md_theme_secondary"
-        android:layout_marginTop="4dp"
-        android:paddingBottom="2dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="4dp"
-            android:paddingBottom="0dp">
-
-            <com.google.android.material.search.SearchBar
-                android:id="@+id/search_bar"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:backgroundTint="@color/md_theme_secondaryFixedDim"
-                android:hint="Search"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:menu="@menu/serch_bar" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView_peca"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_container"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="4dp"
-            app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/main_nav_bar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" />
+
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation_view"
+            android:id="@+id/main_nav_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/md_theme_secondaryFixedDim"
-            android:minHeight="70dp"
+            android:minHeight="60dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:labelVisibilityMode="labeled"
+            app:itemPaddingTop="8dp"
+            app:itemPaddingBottom="4dp"
             app:menu="@menu/navigation_bar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.search.SearchView
-        android:id="@+id/search_view"
+        android:id="@+id/main_search_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:hint="Search"
-        app:backgroundTint="@color/md_theme_secondaryFixedDim"
-        app:layout_anchor="@id/search_bar">
+        app:backgroundTint="@color/md_theme_secondaryFixedDim">
 
     </com.google.android.material.search.SearchView>
 

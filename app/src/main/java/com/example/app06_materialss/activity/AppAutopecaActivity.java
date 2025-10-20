@@ -8,24 +8,22 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app06_materialss.controller.ConexaoController;
-import com.example.app06_materialss.localDatabase.AppDatabase;
+import com.example.app06_materialss.controller.LocalController;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.function.Consumer;
 
 public class AppAutopecaActivity extends AppCompatActivity {
 
-    protected ConexaoController ccont;
-    protected AppDatabase LocalDB;
-
-    private final ExecutorService dbExecutor = Executors.newSingleThreadExecutor();
+    public ConexaoController ccont;
+    public LocalController lcont;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ccont = ConexaoController.getInstance();
+        //lcont = LocalController.getInstance(this);
     }
 
     /**
@@ -35,11 +33,11 @@ public class AppAutopecaActivity extends AppCompatActivity {
      * @param noSucesso A função que será executada na UI Thread com o resultado da operação. (Ex: lista -> meuAdapter.atualizar(lista))
      * @param <T> O tipo de dado que a operação de rede retornará (ex: List<Peca>, Usuario).
      */
-    protected <T> void executarComConexao(Callable<T> operacaoDeRede, Consumer<T> noSucesso) {
+    public <T> void executarComConexao(Callable<Future<T>> operacaoDeRede, Consumer<T> noSucesso) {
         ccont.executar(
                 () -> new Thread(() -> {
                         try {
-                            final T resultado = operacaoDeRede.call();
+                            final T resultado = operacaoDeRede.call().get();
                             runOnUiThread(() -> noSucesso.accept(resultado));
                         } catch (Exception e) {
                             Log.e("BaseActivity", "Erro executando operação de rede", e);
@@ -48,5 +46,17 @@ public class AppAutopecaActivity extends AppCompatActivity {
                     }).start(),
                 () -> runOnUiThread(() -> Toast.makeText(this, "Falha na conexão.", Toast.LENGTH_LONG).show())
         );
+    }
+
+    protected <T> void executarLoacal(Callable<Future<T>> operacaoDeBanco, Consumer<T> noSucesso) {
+        new Thread(() -> {
+            try {
+                final T resultado = operacaoDeBanco.call().get();
+                runOnUiThread(() -> noSucesso.accept(resultado));
+            } catch (Exception e) {
+                Log.e("BaseActivity", "Erro ao executar no banco", e);
+                runOnUiThread(() -> Toast.makeText(this, "Erro no banco de dados.", Toast.LENGTH_SHORT).show());
+            }
+        }).start();
     }
 }

@@ -1,4 +1,4 @@
-package com.example.app06_materialss.recycler;
+package com.example.app06_materialss.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
