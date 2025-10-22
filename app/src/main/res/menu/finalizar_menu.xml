@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <item
-        android:id="@+id/menu_carrinho"
-        android:icon="@drawable/carrinho"
-        android:iconTint="@color/md_theme_onSurfaceVariant_mediumContrast"
-        android:title="Gravar pesquisa"
+        android:id="@+id/finalizar_menu_confirmar"
+        android:icon="@drawable/ok"
+        android:title="Confirmar"
         app:showAsAction="ifRoom" />
-
 </menu>

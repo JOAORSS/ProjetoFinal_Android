@@ -48,7 +48,7 @@ public class AppAutopecaActivity extends AppCompatActivity {
         );
     }
 
-    protected <T> void executarLoacal(Callable<Future<T>> operacaoDeBanco, Consumer<T> noSucesso) {
+    protected <T> void executarLocal(Callable<Future<T>> operacaoDeBanco, Consumer<T> noSucesso) {
         new Thread(() -> {
             try {
                 final T resultado = operacaoDeBanco.call().get();

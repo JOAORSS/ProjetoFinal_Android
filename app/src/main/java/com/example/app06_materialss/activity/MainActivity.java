@@ -124,7 +124,7 @@ public class MainActivity extends AppAutopecaActivity implements OnSearchBarClic
     }
 
     private void carregaCarrinho() {
-        executarLoacal(
+        executarLocal(
                 () -> lcont.listaItemCarrinho(),
                 listaItemCarrinho -> {
                     if (listaItemCarrinho != null) {
@@ -137,7 +137,7 @@ public class MainActivity extends AppAutopecaActivity implements OnSearchBarClic
     }
 
     private void InserirCarrinho(PecaCarrinho peca) {
-        executarLoacal(
+        executarLocal(
                 () -> lcont.inserirItemCarrinho(peca),
                 inserirItemCarrinho -> {
                     Toast.makeText(this, "Peca adicionada com sucesso.", Toast.LENGTH_SHORT).show();

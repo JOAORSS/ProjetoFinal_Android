@@ -11,6 +11,7 @@ meaves = "0.53.0"
 materialVersion = "1.13.0"
 coreSplashscreenVersion = "1.0.1"
 activityVersion = "1.11.0"
+photoview = "1.0.3"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -21,13 +22,15 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 room-common-jvm = { group = "androidx.room", name = "room-common-jvm", version.ref = "roomCommonJvm" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version = "2.8.2" }
-room-compiler = { group = "androidx.room", name = "room-compiler", version = "2.8.2" }
+room-compiler = { group = "androidx.room", name = "room-compiler" , version = "2.8.2"  }
 room-guava = { group = "androidx.room", name = "room-guava", version = "2.8.2" }
 google-material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreenVersion" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activityVersion" }
+photo-view = { group = "io.getstream", name = "photoview", version.ref = "photoview" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-ben-maves-version = {id ="com.github.ben-manes.versions", version.ref = "meaves"}
+ben-maves-version = {id = "com.github.ben-manes.versions", version.ref = "meaves"}
+
 

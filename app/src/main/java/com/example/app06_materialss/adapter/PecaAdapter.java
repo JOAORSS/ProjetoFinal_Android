@@ -1,4 +1,5 @@
 package com.example.app06_materialss.adapter;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,15 @@ import br.com.autopeca360.dominio.Peca;
 public class PecaAdapter extends RecyclerView.Adapter<PecaAdapter.ProdutoViewHolder> {
 
     private List<Peca> listaPeca;
+    private final OnPecaClickListener listener;
 
-    public PecaAdapter(List<Peca> listaPeca) {
+    public interface OnPecaClickListener {
+        void onPecaClick(Peca peca);
+    }
+
+    public PecaAdapter(List<Peca> listaPeca, OnPecaClickListener listener) {
         this.listaPeca = listaPeca;
+        this.listener = listener;
     }
 
     public static class ProdutoViewHolder extends RecyclerView.ViewHolder {
@@ -31,9 +38,9 @@ public class PecaAdapter extends RecyclerView.Adapter<PecaAdapter.ProdutoViewHol
 
         public ProdutoViewHolder(@NonNull View itemView) {
             super(itemView);
-            imagemImageView = itemView.findViewById(R.id.produto_imagem);
-            nomeTextView = itemView.findViewById(R.id.produto_nome);
-            precoTextView = itemView.findViewById(R.id.produto_preco);
+            imagemImageView = itemView.findViewById(R.id.recycler_peca_imagem);
+            nomeTextView = itemView.findViewById(R.id.recycler_peca_nome);
+            precoTextView = itemView.findViewById(R.id.recycler_peca_preco);
         }
     }
 
@@ -54,16 +61,28 @@ public class PecaAdapter extends RecyclerView.Adapter<PecaAdapter.ProdutoViewHol
     @Override
     public void onBindViewHolder(@NonNull ProdutoViewHolder holder, int position) {
         Peca peca = listaPeca.get(position);
+
         Glide.with(holder.itemView.getContext())
                 .load(peca.getImagem())
                 .into(holder.imagemImageView);
+
         holder.nomeTextView.setText(peca.getNome());
         String precoFormatado = String.format(new Locale("pt", "BR"), "R$ %.2f", peca.getPreco());
         holder.precoTextView.setText(precoFormatado);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onPecaClick(peca);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
+        if (listaPeca == null) {
+            return 0;
+        }
         return listaPeca.size();
     }
 }
+

@@ -50,10 +50,32 @@
 
     </style>
 
+    <style name="Theme.App06_Materialss.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.App06_Materialss.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.App06_Materialss.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="TextAppearance.CustomPopupMenu" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="Theme.CustomPopupMenu" parent="ThemeOverlay.MaterialComponents">
+        <item name="textAppearanceListItemSmall">@style/TextAppearance.CustomPopupMenu</item>
+    </style>
+
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/md_theme_secondary</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/logo</item>
         <item name="postSplashScreenTheme">@style/Theme.App06_Materialss</item>
+    </style>
+
+    <style name="CustomToolbarActionTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <!-- Define a cor para os ícones de ação do menu -->
+        <item name="colorControlNormal">@color/md_theme_onPrimaryFixed</item>
     </style>
 
     <style name="Theme.App06_Materialss" parent="Base.Theme.App06_Materialss" />

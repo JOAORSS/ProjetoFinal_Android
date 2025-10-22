@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/finalizar_main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_secondaryFixedDim"
+    tools:context=".activity.FinalizarActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/finalizar_appbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_theme_secondaryFixedDim"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/finalizar_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/md_theme_secondaryFixedDim"
+            app:menu="@menu/finalizar_menu"
+            app:navigationIcon="@drawable/voltar"
+            app:navigationIconTint="@color/md_theme_onSurfaceVariant_mediumContrast"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="Finalizar compra"
+            app:titleTextColor="@color/md_theme_onSurfaceVariant_mediumContrast" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/finalizar_appbar_layout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Seção Dados do Usuário -->
+            <TextView
+                android:id="@+id/finalizar_textView_labelDadosUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dados do usuário"
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                android:textColor="@color/md_theme_onPrimaryFixed" />
+
+            <TextView
+                android:id="@+id/finalizar_textView_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/md_theme_outline_mediumContrast"
+                tools:text="Email: usuario@email.com" />
+
+            <TextView
+                android:id="@+id/finalizar_textView_nome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_theme_outline_mediumContrast"
+                tools:text="Nome: Nome do Usuário" />
+
+            <TextView
+                android:id="@+id/finalizar_textView_dataCriacao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_theme_outline_mediumContrast"
+                tools:text="Cliente desde: 01/01/2024" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="?android:attr/listDivider" />
+
+            <!-- Seção Entrega -->
+            <TextView
+                android:id="@+id/finalizar_textView_labelEntrega"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Entrega"
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                android:textColor="@color/md_theme_onPrimaryFixed" />
+
+            <EditText
+                android:id="@+id/finalizar_editText_endereco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Digite seu endereço completo"
+                android:textColor="@color/md_theme_onPrimaryFixed"
+                android:textColorHint="@color/md_theme_outline_mediumContrast" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="?android:attr/listDivider" />
+
+            <!-- Seção Pagamento -->
+            <TextView
+                android:id="@+id/finalizar_textView_labelPagamento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Forma de pagamento"
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                android:textColor="@color/md_theme_onPrimaryFixed" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="Pix"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                android:textColor="@color/md_theme_onPrimaryFixed" />
+
+            <ImageView
+                android:id="@+id/finalizar_imageView_qrcode"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/logo" />
+
+            <TextView
+                android:id="@+id/finalizar_textView_valorPagar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:textColor="@color/md_theme_onPrimaryFixed"
+                android:textStyle="bold"
+                tools:text="Valor a pagar: R$ 99,99" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/finalizar_textView_pixKey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="chave-pix-aleatoria-aqui-12345"
+                    android:textColor="@color/md_theme_outline_mediumContrast" />
+
+                <Button
+                    android:id="@+id/finalizar_button_copiar"
+                    style="@style/Widget.Material3.Button.TextButton.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Copiar"
+                    app:icon="@drawable/copiar" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="?android:attr/listDivider" />
+
+            <!-- Seção Resumo do Pedido -->
+            <TextView
+                android:id="@+id/finalizar_textView_labelResumo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Resumo do pedido"
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                android:textColor="@color/md_theme_onPrimaryFixed" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/finalizar_recyclerView_resumo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="3"
+                tools:listitem="@layout/recycler_peca_carrinho" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

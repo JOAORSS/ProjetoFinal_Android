@@ -1,6 +1,7 @@
 package com.example.app06_materialss.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +14,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.example.app06_materialss.R;
 import com.example.app06_materialss.activity.AppAutopecaActivity;
+import com.example.app06_materialss.activity.CarrinhoActivity;
+import com.example.app06_materialss.activity.PecaActivity;
 import com.example.app06_materialss.adapter.PecaAdapter;
 import com.example.app06_materialss.fragment.interfaces.OnSearchBarClickListener;
 import com.google.android.material.search.SearchBar;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.autopeca360.dominio.Peca;
 
@@ -30,14 +33,14 @@ public class HomeFragment extends Fragment {
     private SearchBar searchBar;
     private PecaAdapter pecaAdapter;
     private List<Peca> listaDePecas;
-
     private AppAutopecaActivity baseActivity;
+    public static final String PECA_ID = "PECA_ID";
+
+    private OnSearchBarClickListener listener;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
-
-    private OnSearchBarClickListener listener;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -45,8 +48,7 @@ public class HomeFragment extends Fragment {
         if (context instanceof OnSearchBarClickListener) {
             listener = (OnSearchBarClickListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnSearchBarClickListener");
+            throw new RuntimeException(context + " must implement OnSearchBarClickListener");
         }
     }
 
@@ -67,7 +69,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        VinculaViews(view);
+        vinculaViews(view);
         configuraRecyclerViewPeca(view);
         configuraSearch();
         carregarPecas();
@@ -79,23 +81,35 @@ public class HomeFragment extends Fragment {
                 listener.onSearchBarClicked(searchBar);
             }
         });
+
+        searchBar.setOnMenuItemClickListener(menuItem -> {
+            if (menuItem.getItemId() == R.id.menu_carrinho) {
+                Intent intent = new Intent(getActivity(), CarrinhoActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            return false;
+        });
     }
 
-    private void VinculaViews(View view) {
+    private void vinculaViews(View view) {
         recyclerViewPeca = view.findViewById(R.id.home_recyclerView_peca);
         searchBar = view.findViewById(R.id.home_search_bar);
     }
 
     private void configuraRecyclerViewPeca(View view) {
         listaDePecas = new ArrayList<>();
-        pecaAdapter = new PecaAdapter(listaDePecas);
+        pecaAdapter = new PecaAdapter(listaDePecas, peca -> {
+            Intent intent = new Intent(getActivity(), PecaActivity.class);
+            intent.putExtra(PECA_ID, peca.getCodpeca());
+            startActivity(intent);
+        });
         recyclerViewPeca.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerViewPeca.setAdapter(pecaAdapter);
     }
 
     private void carregarPecas() {
         if (baseActivity == null) return;
-
         baseActivity.executarComConexao(
                 () -> baseActivity.ccont.pecaLista(),
                 listaRecebida -> {
@@ -108,3 +122,4 @@ public class HomeFragment extends Fragment {
         );
     }
 }
+

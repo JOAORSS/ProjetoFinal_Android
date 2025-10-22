@@ -48,4 +48,23 @@ public abstract class LocalController extends RoomDatabase {
         return dbExecutor.submit(tarefaEscrita);
     }
 
+    public Future<PecaCarrinho> buscaItemCarrinhoPorId(int pecaId) {
+        return dbExecutor.submit(() -> carrinhoDao().getItemPorId(pecaId));
+    }
+
+    public Future<Void> atualizarItemCarrinho(PecaCarrinho item) {
+        return dbExecutor.submit(() -> {
+            carrinhoDao().atualizar(item);
+            return null;
+        });
+    }
+
+    public Future<Void> deletarItemCarrinho(PecaCarrinho item) {
+        Callable<Void> tarefaDelecao = () -> {
+            carrinhoDao().deletarItem(item);
+            return null;
+        };
+        return dbExecutor.submit(tarefaDelecao);
+    }
+
 }

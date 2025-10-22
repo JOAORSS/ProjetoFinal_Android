@@ -103,7 +103,7 @@ public class ConexaoController {
     }
 
     public Future<List<Peca>> pecaLista() {
-        Callable<List<Peca>> tarefaLista = () -> {
+        Callable<List<Peca>> pecaListar = () -> {
             if (estado != EstadoConexao.CONECTADO) {
                 throw new IllegalStateException("Cliente não está conectado.");
             }
@@ -112,11 +112,11 @@ public class ConexaoController {
             in.readObject();
             return (List<Peca>) in.readObject();
         };
-        return executor.submit(tarefaLista);
+        return executor.submit(pecaListar);
     }
 
     public Future<Usuario> usuarioLogin(Usuario user){
-        Callable<Usuario> tarefaLista = () -> {
+        Callable<Usuario> usuarioLogar = () -> {
             if (estado != EstadoConexao.CONECTADO) {
                 throw new IllegalStateException("Cliente não está conectado.");
             }
@@ -127,19 +127,24 @@ public class ConexaoController {
             out.flush();
             return (Usuario) in.readObject();
         };
-        return executor.submit(tarefaLista);
+        return executor.submit(usuarioLogar);
     }
 
-    public String testaConexao() {
-        try {
-            out.writeObject("TestaConexao");
-            return (String) in.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            return "false";
-        }
+    public Future<Peca> pecaBusca(int id){
+        Callable<Peca> pecaBuscar = () -> {
+            if (estado != EstadoConexao.CONECTADO) {
+                throw new IllegalStateException("Cliente não está conectado.");
+            }
+            out.writeObject("PecaBusca");
+            out.flush();
+            in.readObject();
+            out.writeObject(id);
+            out.flush();
+            return (Peca) in.readObject();
+        };
+        return executor.submit(pecaBuscar);
     }
-    
+
     public boolean pecaInserir(Peca p){
         try {
             out.writeObject("PecaInserir");

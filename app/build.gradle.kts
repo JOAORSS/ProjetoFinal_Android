@@ -90,6 +90,7 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation(libs.room.runtime)
     implementation(libs.room.guava)
-    implementation(libs.room.runtime);
-    annotationProcessor(libs.room.runtime);
+    implementation(libs.room.runtime)
+    implementation(libs.photo.view)
+    annotationProcessor(libs.room.compiler)
 }

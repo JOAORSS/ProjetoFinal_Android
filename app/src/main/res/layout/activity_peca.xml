@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_secondaryFixedDim"
+    tools:context=".activity.PecaActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_theme_secondaryFixedDim"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/peca_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/md_theme_secondaryFixedDim"
+            app:navigationIcon="@drawable/voltar"
+            app:navigationIconTint="@color/md_theme_onSurfaceVariant_mediumContrast"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="Peca tanana"
+            app:titleTextColor="@color/md_theme_onSurfaceVariant_mediumContrast" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+        <Button
+            android:id="@+id/peca_button_adicionarAoCarrinho"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/md_theme_tertiaryFixedDim_highContrast"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:padding="12dp"
+            android:text="Adicionar ao carrinho"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/peca_button_adicionarAoCarrinho"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar_layout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/peca_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <io.getstream.photoview.PhotoView
+                android:id="@+id/peca_photoView"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/peca_favoritar"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/peca_photoView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/heart"
+                app:tint="@color/md_theme_secondaryFixedDim" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/peca_photoView">
+
+                <TextView
+                    android:id="@+id/peca_textView_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Título do Produto"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/md_theme_onSurfaceVariant_mediumContrast"
+                    android:textSize="32dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/peca_textView_preco"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="R$ 99,90"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:textColor="@color/md_theme_tertiary_mediumContrast"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/peca_textView_title" />
+
+                <TextView
+                    android:id="@+id/peca_textView_paymentInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Aceitamos PIX ou Boleto"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/md_theme_tertiaryFixedDim_mediumContrast"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/peca_textView_preco" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Comprar quantidade:"
+                    android:textColor="@color/md_theme_onPrimaryFixed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/peca_textView_paymentInfo" />
+
+                <LinearLayout
+                    android:id="@+id/peca_linearLayout_quantitySelector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/quantity_selector_background"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+                    <ImageButton
+                        android:id="@+id/peca_button_decrease"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/menos"
+                        app:tint="@color/md_theme_onSurfaceVariant_mediumContrast" />
+
+                    <TextView
+                        android:id="@+id/peca_textView_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="1"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/md_theme_tertiary_mediumContrast"
+                        android:textSize="24dp"
+                        android:textStyle="bold" />
+
+                    <ImageButton
+                        android:id="@+id/peca_button_increment"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/mais"
+                        app:tint="@color/md_theme_onSurfaceVariant_mediumContrast" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/peca_info_container"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/peca_linearLayout_quantitySelector">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:textSize="20sp"
+                            android:layout_height="wrap_content"
+                            android:text="Fornecedor: "
+                            android:textColor="@color/md_theme_tertiary_mediumContrast"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/peca_textView_fornecedor"
+                            android:layout_width="wrap_content"
+                            android:textSize="18sp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/md_theme_onPrimaryFixed"
+                            tools:text="Nome do Fornecedor" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Peça compatível com:"
+                            android:textSize="20sp"
+                            android:textColor="@color/md_theme_tertiary_mediumContrast"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/peca_textView_compativel"
+                            android:layout_width="wrap_content"
+                            android:textSize="18sp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/md_theme_onPrimaryFixed"
+                            tools:text="peca1, peca2" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:text="Descrição:"
+                            android:textColor="@color/md_theme_tertiary_mediumContrast"
+                            android:textStyle="bold" />
+
+                        <ScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginTop="4dp"
+                            android:backgroundTint="@color/md_theme_tertiary_mediumContrast"
+                            android:background="@drawable/quantity_selector_background"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:id="@+id/peca_textView_descricao"
+                                android:layout_width="match_parent"
+                                android:textSize="18sp"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/md_theme_onPrimaryFixed"
+                                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur." />
+                        </ScrollView>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

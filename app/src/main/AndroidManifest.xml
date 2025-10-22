@@ -15,7 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.App06_Materialss">
         <activity
-            android:name=".activity.AppAutopecaActivity"
+            android:name=".activity.FinalizarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CarrinhoActivity"
             android:exported="false" />
         <activity
             android:name=".activity.MainActivity"
@@ -27,6 +30,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.AppAutopecaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.PecaActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.CadastroActivity"
             android:exported="false" />

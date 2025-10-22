@@ -5,6 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.app06_materialss.entity.PecaCarrinho;
 
@@ -32,7 +33,9 @@ public interface CarrinhoDao {
     @Delete
     void deletarItem(PecaCarrinho item);
 
-    // Você pode adicionar outros métodos que precisar
-    // Ex: @Query("SELECT COUNT(pecaId) FROM tabela_carrinho")
-    // int getContagemDeItens();
+    @Query("SELECT * FROM tabela_carrinho WHERE pecaId = :pecaId LIMIT 1")
+    PecaCarrinho getItemPorId(int pecaId);
+
+    @Update
+    void atualizar(PecaCarrinho item);
 }
