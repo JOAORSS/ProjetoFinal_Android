@@ -27,6 +27,9 @@ android {
     namespace = "com.example.app06_materialss"
     compileSdk = 36
     buildFeatures.buildConfig = true
+    buildFeatures {
+        viewBinding = true
+    }
 
     defaultConfig {
         applicationId = "com.example.app06_materialss"
@@ -85,6 +88,9 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.annotation)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

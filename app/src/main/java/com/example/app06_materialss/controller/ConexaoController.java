@@ -130,6 +130,21 @@ public class ConexaoController {
         return executor.submit(usuarioLogar);
     }
 
+    public Future<Usuario> usuarioCadastro(Usuario user){
+        Callable<Usuario> usuarioLogar = () -> {
+            if (estado != EstadoConexao.CONECTADO) {
+                throw new IllegalStateException("Cliente não está conectado.");
+            }
+            out.writeObject("UsuarioCadastro");
+            out.flush();
+            in.readObject();
+            out.writeObject(user);
+            out.flush();
+            return (Usuario) in.readObject();
+        };
+        return executor.submit(usuarioLogar);
+    }
+
     public Future<Peca> pecaBusca(int id){
         Callable<Peca> pecaBuscar = () -> {
             if (estado != EstadoConexao.CONECTADO) {

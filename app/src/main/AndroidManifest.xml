@@ -37,10 +37,7 @@
             android:name=".activity.PecaActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.CadastroActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activity.AutenticacaoActivity"
             android:exported="false" />
     </application>
 

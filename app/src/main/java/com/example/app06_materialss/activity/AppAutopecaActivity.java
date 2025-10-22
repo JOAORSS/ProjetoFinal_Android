@@ -23,7 +23,7 @@ public class AppAutopecaActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ccont = ConexaoController.getInstance();
-        //lcont = LocalController.getInstance(this);
+        lcont = LocalController.getInstance(this);
     }
 
     /**
@@ -48,7 +48,7 @@ public class AppAutopecaActivity extends AppCompatActivity {
         );
     }
 
-    protected <T> void executarLocal(Callable<Future<T>> operacaoDeBanco, Consumer<T> noSucesso) {
+    public <T> void executarLocal(Callable<Future<T>> operacaoDeBanco, Consumer<T> noSucesso) {
         new Thread(() -> {
             try {
                 final T resultado = operacaoDeBanco.call().get();

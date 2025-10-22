@@ -9,18 +9,20 @@ import androidx.fragment.app.Fragment;
 
 import com.example.app06_materialss.R;
 import com.example.app06_materialss.controller.ConexaoController;
-import com.example.app06_materialss.entity.PecaCarrinho;
 import com.example.app06_materialss.fragment.HomeFragment;
 import com.example.app06_materialss.fragment.SearchFragment;
 import com.example.app06_materialss.fragment.interfaces.OnSearchBarClickListener;
+import com.example.app06_materialss.utils.SessaoManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.search.SearchBar;
 import com.google.android.material.search.SearchView;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppAutopecaActivity implements OnSearchBarClickListener {
 
     public ConexaoController ccont;
     private boolean isConnectionFinished = false;
+    private boolean isLoginCheckFinished = false;
 
     private BottomNavigationView navBar;
     private SearchView searchView;
@@ -31,11 +33,12 @@ public class MainActivity extends AppAutopecaActivity implements OnSearchBarClic
         SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
 
-        splashScreen.setKeepOnScreenCondition(() -> !isConnectionFinished);
+        splashScreen.setKeepOnScreenCondition(() -> !isConnectionFinished || !isLoginCheckFinished );
         conectaServidor();
+        verificarLoginLocal();
 
         setContentView(R.layout.activity_main);
-        VinculaComponetes();
+        vinculaComponetes();
         ConfiguraNavBar();
         ConfiguraSearchView();
 
@@ -107,7 +110,7 @@ public class MainActivity extends AppAutopecaActivity implements OnSearchBarClic
             searchView.hide();
         }
     }
-    private void VinculaComponetes() {
+    private void vinculaComponetes() {
         navBar = findViewById(R.id.main_nav_bar);
         searchView = findViewById(R.id.main_search_view);
     }
@@ -123,25 +126,20 @@ public class MainActivity extends AppAutopecaActivity implements OnSearchBarClic
         );
     }
 
-    private void carregaCarrinho() {
+
+    private void verificarLoginLocal() {
         executarLocal(
-                () -> lcont.listaItemCarrinho(),
-                listaItemCarrinho -> {
-                    if (listaItemCarrinho != null) {
-                        Toast.makeText(this, "A lista de tamanho" + listaItemCarrinho.size(), Toast.LENGTH_SHORT).show();
+                () -> lcont.getUsuarioLogado(),
+                usuarioDoBanco -> {
+                    if (usuarioDoBanco != null) {
+                        SessaoManager.getInstance().iniciarSessao(usuarioDoBanco);
+                        Snackbar.make(findViewById(android.R.id.content), "Bem vindo de volta!", Snackbar.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(this, "A lista de peças veio vazia ou nula.", Toast.LENGTH_SHORT).show();
+                        SessaoManager.getInstance().encerrarSessao();
                     }
+                    isLoginCheckFinished = true;
                 }
         );
-    }
-
-    private void InserirCarrinho(PecaCarrinho peca) {
-        executarLocal(
-                () -> lcont.inserirItemCarrinho(peca),
-                inserirItemCarrinho -> {
-                    Toast.makeText(this, "Peca adicionada com sucesso.", Toast.LENGTH_SHORT).show();
-                });
     }
 
 

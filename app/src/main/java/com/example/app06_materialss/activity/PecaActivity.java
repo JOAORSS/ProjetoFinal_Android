@@ -1,5 +1,6 @@
 package com.example.app06_materialss.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -18,6 +19,7 @@ import com.example.app06_materialss.controller.ConexaoController;
 import com.example.app06_materialss.controller.LocalController;
 import com.example.app06_materialss.entity.PecaCarrinho;
 import com.example.app06_materialss.fragment.HomeFragment;
+import com.example.app06_materialss.utils.SessaoManager;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -93,8 +95,10 @@ public class PecaActivity extends AppAutopecaActivity {
 
     private void configuraBotaoAdicionarAoCarrinho() {
         BtnAdicionarAoCarrinho.setOnClickListener(v -> {
-            if (peca == null) {
-                Toast.makeText(this, "Aguarde o carregamento da peça.", Toast.LENGTH_SHORT).show();
+            if (!SessaoManager.getInstance().isLogado()) {
+                Toast.makeText(this, "Faça login para adicionar itens ao carrinho.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, AutenticacaoActivity.class);
+                startActivity(intent);
                 return;
             }
 

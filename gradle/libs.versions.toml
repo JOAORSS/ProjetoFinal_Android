@@ -12,6 +12,9 @@ materialVersion = "1.13.0"
 coreSplashscreenVersion = "1.0.1"
 activityVersion = "1.11.0"
 photoview = "1.0.3"
+annotationVersion = "1.9.1"
+lifecycleLivedataKtxVersion = "2.9.4"
+lifecycleViewmodelKtxVersion = "2.9.4"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -28,6 +31,9 @@ google-material = { group = "com.google.android.material", name = "material", ve
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreenVersion" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activityVersion" }
 photo-view = { group = "io.getstream", name = "photoview", version.ref = "photoview" }
+androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotationVersion" }
+androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtxVersion" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtxVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

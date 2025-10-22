@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cadastro_constraintLayout_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_secondary"
+    tools:context=".fragment.CadastroFragment">
+
+    <ImageView
+        android:id="@+id/cadastro_imageView_logo"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/cadastro_textView_titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crie sua conta!"
+        android:textColor="@color/md_theme_onSecondary"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cadastro_imageView_logo" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/cadastro_textInputLayout_nome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="16dp"
+        android:hint="Nome"
+        android:textColorHint="@color/md_theme_onSecondary"
+        app:boxStrokeColor="@color/md_theme_onSecondary"
+        app:layout_constraintTop_toBottomOf="@+id/cadastro_textView_titulo">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/cadastro_textInputEditText_nome"
+            android:layout_width="match_parent"
+            android:textColor="@color/md_theme_onSecondary"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/cadastro_textInputLayout_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="8dp"
+        android:hint="Email"
+        android:textColorHint="@color/md_theme_onSecondary"
+        app:boxStrokeColor="@color/md_theme_onSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cadastro_textInputLayout_nome">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/cadastro_textInputEditText_email"
+            android:layout_width="match_parent"
+            android:textColor="@color/md_theme_onSecondary"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/cadastro_textInputLayout_senha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="8dp"
+        android:textColorHint="@color/md_theme_onSecondary"
+        app:boxStrokeColor="@color/md_theme_onSecondary"
+        android:hint="Senha"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cadastro_textInputLayout_email">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/cadastro_textInputEditText_senha"
+            android:layout_width="match_parent"
+            android:textColor="@color/md_theme_onSecondary"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/cadastro_button_cadastrar"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/md_theme_surfaceVariant"
+        android:text="Cadastrar"
+        android:textColor="@color/md_theme_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cadastro_textInputLayout_senha" />
+
+    <TextView
+        android:id="@+id/cadastro_textView_jaTemConta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Já possui uma conta?"
+        android:textColor="@color/md_theme_onPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/cadastro_textView_fazerLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/cadastro_textView_fazerLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="Faça login"
+        android:textStyle="bold"
+        android:textColor="@color/md_theme_primaryContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

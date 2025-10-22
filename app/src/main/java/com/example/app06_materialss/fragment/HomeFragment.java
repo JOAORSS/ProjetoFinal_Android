@@ -17,9 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.app06_materialss.R;
 import com.example.app06_materialss.activity.AppAutopecaActivity;
 import com.example.app06_materialss.activity.CarrinhoActivity;
+import com.example.app06_materialss.activity.AutenticacaoActivity;
 import com.example.app06_materialss.activity.PecaActivity;
 import com.example.app06_materialss.adapter.PecaAdapter;
 import com.example.app06_materialss.fragment.interfaces.OnSearchBarClickListener;
+import com.example.app06_materialss.utils.SessaoManager;
 import com.google.android.material.search.SearchBar;
 
 import java.util.ArrayList;
@@ -84,8 +86,14 @@ public class HomeFragment extends Fragment {
 
         searchBar.setOnMenuItemClickListener(menuItem -> {
             if (menuItem.getItemId() == R.id.menu_carrinho) {
-                Intent intent = new Intent(getActivity(), CarrinhoActivity.class);
-                startActivity(intent);
+                if (SessaoManager.getInstance().isLogado()) {
+                    Intent intent = new Intent(getActivity(), CarrinhoActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getContext(), "Você precisa fazer login para ver o carrinho.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getActivity(), AutenticacaoActivity.class);
+                    startActivity(intent);
+                }
                 return true;
             }
             return false;
