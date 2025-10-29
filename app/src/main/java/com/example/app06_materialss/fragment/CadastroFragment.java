@@ -1,6 +1,7 @@
 package com.example.app06_materialss.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +16,17 @@ import androidx.fragment.app.Fragment;
 
 import com.example.app06_materialss.R;
 import com.example.app06_materialss.activity.AppAutopecaActivity;
+import com.example.app06_materialss.activity.MainActivity;
+import com.example.app06_materialss.entity.UsuarioLogado;
 import com.example.app06_materialss.fragment.interfaces.NavegacaoAutenticacaoListener;
+import com.example.app06_materialss.utils.SessaoManager;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
+import br.com.autopeca360.dominio.Usuario;
 
 public class CadastroFragment extends Fragment {
 
@@ -74,7 +84,55 @@ public class CadastroFragment extends Fragment {
 
     private void configuraBotaoCadastrar() {
         btnCadastrar.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "TODO: Implementar lógica de cadastro", Toast.LENGTH_SHORT).show();
+            String nome = etNome.getText().toString();
+            String email = etEmail.getText().toString();
+            String senha = etSenha.getText().toString();
+
+            if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
+                Snackbar.make(baseActivity.findViewById(R.id.cadastro_constraintLayout_main),
+                        "Preencha todos os campos",
+                            Toast.LENGTH_SHORT)
+                            .show();
+                return;
+            }
+
+            Usuario usuarioDeCadastro = new Usuario(0, nome, email, senha);
+
+            baseActivity.executarComConexao(
+                    () -> baseActivity.ccont.usuarioCadastro(usuarioDeCadastro),
+                    usuarioRetornado -> {
+                        if (usuarioRetornado != null) {
+                            UsuarioLogado usuarioParaSalvar = new UsuarioLogado(
+                                    usuarioRetornado.getCodusuario(),
+                                    usuarioRetornado.getNome(),
+                                    usuarioRetornado.getEmail(),
+                                    usuarioRetornado.getEndereco(),
+                                    new SimpleDateFormat("dd/MM/yyyy", new Locale("pt", "BR"))
+                                            .format(usuarioRetornado.getDataCadastro())
+                            );
+
+                            baseActivity.executarLocal(
+                                    () -> baseActivity.lcont.inserirUsuarioLogado(usuarioParaSalvar),
+                                    resultado -> {
+                                        SessaoManager.getInstance().iniciarSessao(usuarioParaSalvar);
+                                        Snackbar.make(baseActivity.findViewById(R.id.cadastro_constraintLayout_main),
+                                                 "Cadastro realizado com sucesso!",
+                                                      Snackbar.LENGTH_LONG)
+                                                      .show();
+                                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                    }
+                            );
+                        } else {
+                            Snackbar.make(baseActivity.findViewById(R.id.cadastro_constraintLayout_main),
+                                     "E-mail ou senha inválidos.",
+                                          Snackbar.LENGTH_SHORT)
+                                          .show();
+                        }
+                    }
+            );
+
         });
     }
 }

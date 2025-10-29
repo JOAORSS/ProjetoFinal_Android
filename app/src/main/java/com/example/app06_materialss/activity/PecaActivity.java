@@ -18,6 +18,7 @@ import com.example.app06_materialss.R;
 import com.example.app06_materialss.controller.ConexaoController;
 import com.example.app06_materialss.controller.LocalController;
 import com.example.app06_materialss.entity.PecaCarrinho;
+import com.example.app06_materialss.entity.PecaFavorita;
 import com.example.app06_materialss.fragment.HomeFragment;
 import com.example.app06_materialss.utils.SessaoManager;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -30,18 +31,11 @@ import io.getstream.photoview.PhotoView;
 
 public class PecaActivity extends AppAutopecaActivity {
 
-    private PhotoView photoView;
-    private TextView TvTitulo;
-    private TextView TvPreco;
-    private TextView TvFornecedor;
-    private TextView TvCompativel;
-    private TextView TvDescricao;
-    private ImageButton BtnMenosQuantidade;
-    private ImageButton BtnMaisQuantidade;
-    private ImageButton BtnFavoritar;
-    private TextView Quantidade;
+    private TextView TvTitulo, TvPreco, TvFornecedor, TvCompativel, TvDescricao, Quantidade;
+    private ImageButton BtnMenosQuantidade, BtnMaisQuantidade, BtnFavoritar;
     private Button BtnAdicionarAoCarrinho;
     private MaterialToolbar toolbar;
+    private PhotoView photoView;
 
     private Peca peca;
     private boolean favoritado;
@@ -77,20 +71,54 @@ public class PecaActivity extends AppAutopecaActivity {
 
     private void configuraBotaoFavoritar() {
         BtnFavoritar.setOnClickListener(v -> {
+            if (peca == null) return;
+
             if (favoritado) {
-                Snackbar snack = Snackbar.make(v, "Removido dos favoritos", Snackbar.LENGTH_SHORT);
-                snack.setAnchorView(BtnAdicionarAoCarrinho);
-                snack.show();
-                BtnFavoritar.setColorFilter(ContextCompat.getColor(this, R.color.md_theme_secondaryFixedDim));
-                favoritado = false;
+                PecaFavorita pecaParaDeletar = new PecaFavorita(peca.getCodpeca(), peca.getNome(), peca.getPreco(), peca.getImagem());
+                executarLocal(
+                        () -> lcont.deletarFavorito(pecaParaDeletar),
+                        resultado -> {
+                            Snackbar snack = Snackbar.make(v, "Removido dos favoritos", Snackbar.LENGTH_SHORT);
+                            snack.setAnchorView(BtnAdicionarAoCarrinho);
+                            snack.show();
+                            atualizarIconeFavorito(false);
+                        }
+                );
             } else {
-                Snackbar snack =  Snackbar.make(v, "Adicionado aos favoritos", Snackbar.LENGTH_SHORT);
-                snack.setAnchorView(BtnAdicionarAoCarrinho);
-                snack.show();
-                BtnFavoritar.setColorFilter(ContextCompat.getColor(this, R.color.md_theme_tertiaryFixedDim));
-                favoritado = true;
+                PecaFavorita pecaParaSalvar = new PecaFavorita(peca.getCodpeca(), peca.getNome(), peca.getPreco(), peca.getImagem());
+                executarLocal(
+                        () -> lcont.inserirFavorito(pecaParaSalvar),
+                        resultado -> {
+                            Snackbar snack = Snackbar.make(v, "Adicionado aos favoritos", Snackbar.LENGTH_SHORT);
+                            snack.setAnchorView(BtnAdicionarAoCarrinho);
+                            snack.show();
+                            atualizarIconeFavorito(true);
+                        }
+                );
             }
         });
+    }
+
+    private void verificarStatusFavorito(int pecaId) {
+        executarLocal(
+                () -> lcont.buscarFavoritoPorId(pecaId),
+                pecaFavorita -> {
+                    if (pecaFavorita != null) {
+                        atualizarIconeFavorito(true);
+                    } else {
+                        atualizarIconeFavorito(false);
+                    }
+                }
+        );
+    }
+
+    private void atualizarIconeFavorito(boolean isFavorito) {
+        this.favoritado = isFavorito;
+        if (isFavorito) {
+            BtnFavoritar.setColorFilter(ContextCompat.getColor(this, R.color.md_theme_tertiaryFixedDim));
+        } else {
+            BtnFavoritar.setColorFilter(ContextCompat.getColor(this, R.color.md_theme_secondaryFixedDim));
+        }
     }
 
     private void configuraBotaoAdicionarAoCarrinho() {
@@ -99,6 +127,11 @@ public class PecaActivity extends AppAutopecaActivity {
                 Toast.makeText(this, "Faça login para adicionar itens ao carrinho.", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(this, AutenticacaoActivity.class);
                 startActivity(intent);
+                return;
+            }
+
+            if (peca == null) {
+                Toast.makeText(this, "Aguarde o carregamento da peça.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -202,6 +235,8 @@ public class PecaActivity extends AppAutopecaActivity {
                         Glide.with(this)
                                 .load(peca.getImagem())
                                 .into(photoView);
+
+                        verificarStatusFavorito(peca.getCodpeca());
                     } else {
                         Toast.makeText(this, "Erro ao carregar peças", Toast.LENGTH_SHORT).show();
                     }

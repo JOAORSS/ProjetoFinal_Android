@@ -15,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.App06_Materialss">
         <activity
+            android:name=".activity.PerfilActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CompraConcluidaActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.FinalizarActivity"
             android:exported="false" />
         <activity

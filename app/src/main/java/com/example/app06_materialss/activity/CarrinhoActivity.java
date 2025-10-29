@@ -113,7 +113,9 @@ public class CarrinhoActivity extends AppAutopecaActivity {
         executarLocal(
                 () -> lcont.deletarItemCarrinho(itemParaExcluir),
                 resultado -> {
-                    Snackbar snack = Snackbar.make(findViewById(android.R.id.content), "Removido do carrinho", Snackbar.LENGTH_SHORT);
+                    Snackbar snack = Snackbar.make(findViewById(android.R.id.content),
+                                              "Removido do carrinho",
+                                                    Snackbar.LENGTH_SHORT);
                     snack.setAnchorView(finalizarButton);
                     snack.show();
                     carregarItensDoCarrinho();

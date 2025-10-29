@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/md_theme_secondaryFixed_mediumContrast"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_secondaryFixedDim">
+    tools:context=".fragment.FavoritosFragment">
 
-    <com.google.android.material.search.SearchBar
-        android:id="@+id/search_search_bar"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/favoritos_app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/md_theme_secondaryFixedDim"
-        android:hint="Buscar peça..."
+        android:background="@color/md_theme_secondaryFixed_mediumContrast"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/serch_bar" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.search.SearchBar
+            android:id="@+id/favoritos_search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/md_theme_secondaryFixedDim"
+            android:hint="Buscar em peça..."
+            app:menu="@menu/serch_bar" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_recyclerView_resultados"
+        android:id="@+id/favoritos_recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -30,23 +37,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_search_bar"
+        app:layout_constraintTop_toBottomOf="@id/favoritos_app_bar_layout"
         app:spanCount="2"
-        tools:listitem="@layout/recycler_peca"
-        tools:visibility="visible"/>
+        tools:listitem="@layout/recycler_peca" />
 
     <TextView
-        android:id="@+id/search_textView_nenhumResultado"
+        android:id="@+id/favoritos_textView_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nenhum resultado encontrado"
+        android:text="Nenhuma peça favoritada"
         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-        android:textColor="@color/md_theme_onPrimaryFixed"
-        android:visibility="gone"
+        android:textColor="@color/md_theme_secondaryFixedDim"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_search_bar"
-        tools:visibility="visible"/>
+        app:layout_constraintTop_toBottomOf="@id/favoritos_app_bar_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

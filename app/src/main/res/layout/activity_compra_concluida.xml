@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/compraConcluida_main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_secondary"
+    tools:context=".activity.CompraConcluidaActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/compraConcluida_appbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_theme_secondary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/compraConcluida_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/md_theme_secondary"
+            app:navigationIcon="@drawable/voltar"
+            app:navigationIconTint="@color/md_theme_secondaryFixedDim"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="Compra Finalizada"
+            app:titleTextColor="@color/md_theme_secondaryFixedDim" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ImageView
+        android:id="@+id/compraConcluida_imageView_logo"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/compraConcluida_appbar_layout" />
+
+    <TextView
+        android:id="@+id/compraConcluida_textView_labelResumo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Resumo da compra:"
+        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+        android:textColor="@color/md_theme_secondaryFixedDim"
+        app:layout_constraintBottom_toTopOf="@+id/compraConcluida_cardView_resumoContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/compraConcluida_imageView_logo" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/compraConcluida_cardView_resumoContainer"
+        android:layout_width="0dp"
+        android:layout_height="380dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardBackgroundColor="@color/md_theme_secondaryFixedDim"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/compraConcluida_textView_labelResumo">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/compraConcluida_recyclerView_resumo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/recycler_peca_carrinho" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/compraConcluida_textView_mensagem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Compra finalizada com sucesso!"
+        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+        android:textColor="@color/md_theme_secondaryFixedDim"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/compraConcluida_cardView_resumoContainer" />
+
+    <Button
+        android:id="@+id/compraConcluida_button_voltar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Voltar para o começo"
+        android:backgroundTint="@color/md_theme_tertiary_highContrast"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/compraConcluida_textView_mensagem" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

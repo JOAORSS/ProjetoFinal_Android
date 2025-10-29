@@ -21,7 +21,11 @@ import com.example.app06_materialss.activity.MainActivity;
 import com.example.app06_materialss.entity.UsuarioLogado;
 import com.example.app06_materialss.fragment.interfaces.NavegacaoAutenticacaoListener;
 import com.example.app06_materialss.utils.SessaoManager;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import br.com.autopeca360.dominio.Usuario;
 
@@ -85,7 +89,10 @@ public class LoginFragment extends Fragment {
             String senha = etSenha.getText().toString().trim();
 
             if (TextUtils.isEmpty(email) || TextUtils.isEmpty(senha)) {
-                Toast.makeText(getContext(), "Por favor, preencha todos os campos.", Toast.LENGTH_SHORT).show();
+                Snackbar.make(baseActivity.findViewById(R.id.login_constraintLayout_main),
+                         "Por favor, preencha todos os campos.",
+                              Snackbar.LENGTH_SHORT)
+                              .show();
                 return;
             }
 
@@ -98,21 +105,28 @@ public class LoginFragment extends Fragment {
                                     usuarioRetornado.getNome(),
                                     usuarioRetornado.getEmail(),
                                     usuarioRetornado.getEndereco(),
-                                    usuarioRetornado.getDataCadastro().toString()
+                                    new SimpleDateFormat("dd/MM/yyyy", new Locale("pt", "BR"))
+                                            .format(usuarioRetornado.getDataCadastro())
                             );
 
                             baseActivity.executarLocal(
                                     () -> baseActivity.lcont.inserirUsuarioLogado(usuarioParaSalvar),
                                     resultado -> {
                                         SessaoManager.getInstance().iniciarSessao(usuarioParaSalvar);
-                                        Toast.makeText(getContext(), "Login realizado com sucesso!", Toast.LENGTH_LONG).show();
+                                        Snackbar.make(baseActivity.findViewById(R.id.login_constraintLayout_main),
+                                                 "Login realizado com sucesso!",
+                                                      Snackbar.LENGTH_LONG)
+                                                      .show();
                                         Intent intent = new Intent(getActivity(), MainActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent);
                                     }
                             );
                         } else {
-                            Toast.makeText(getContext(), "E-mail ou senha inválidos.", Toast.LENGTH_SHORT).show();
+                            Snackbar.make(baseActivity.findViewById(R.id.login_constraintLayout_main),
+                                     "E-mail ou senha inválidos.",
+                                          Snackbar.LENGTH_LONG)
+                                          .show();
                         }
                     }
             );

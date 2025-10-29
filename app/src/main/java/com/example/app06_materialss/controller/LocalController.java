@@ -6,8 +6,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.app06_materialss.DAO.CarrinhoDao;
+import com.example.app06_materialss.DAO.FavoritoDao;
 import com.example.app06_materialss.DAO.UsuarioDao;
 import com.example.app06_materialss.entity.PecaCarrinho;
+import com.example.app06_materialss.entity.PecaFavorita;
 import com.example.app06_materialss.entity.UsuarioLogado;
 
 import java.util.List;
@@ -18,7 +20,7 @@ import java.util.concurrent.Future;
 
 import br.com.autopeca360.dominio.Usuario;
 
-@Database(entities = {PecaCarrinho.class, UsuarioLogado.class}, version = 2)
+@Database(entities = {PecaCarrinho.class, UsuarioLogado.class, PecaFavorita.class}, version = 3)
 public abstract class LocalController extends RoomDatabase {
 
     private static volatile LocalController INSTANCE;
@@ -88,6 +90,48 @@ public abstract class LocalController extends RoomDatabase {
             usuarioDao().limparUsuario();
             return null;
         });
+    }
+
+    public Future<Void> limparCarrinho() {
+        Callable<Void> tarefaLimpeza = () -> {
+            carrinhoDao().limparCarrinho();
+            return null;
+        };
+        return dbExecutor.submit(tarefaLimpeza);
+    }
+
+    public abstract FavoritoDao favoritoDao();
+
+    public Future<Void> inserirFavorito(PecaFavorita peca) {
+        Callable<Void> tarefa = () -> {
+            favoritoDao().inserir(peca);
+            return null;
+        };
+        return dbExecutor.submit(tarefa);
+    }
+
+    public Future<Void> deletarFavorito(PecaFavorita peca) {
+        Callable<Void> tarefa = () -> {
+            favoritoDao().deletar(peca);
+            return null;
+        };
+        return dbExecutor.submit(tarefa);
+    }
+
+    public Future<PecaFavorita> buscarFavoritoPorId(int pecaId) {
+        Callable<PecaFavorita> tarefa = () -> favoritoDao().buscarPorId(pecaId);
+        return dbExecutor.submit(tarefa);
+    }
+
+    public Future<List<PecaFavorita>> listaItensFavoritos() {
+        Callable<List<PecaFavorita>> tarefa = () -> favoritoDao().getTodosFavoritos();
+        return dbExecutor.submit(tarefa);
+    }
+
+    public Future<List<PecaFavorita>> buscarFavoritosPorNome(String termoBusca) {
+        Callable<List<PecaFavorita>> tarefaBusca = () ->
+                favoritoDao().buscarPorNome("%" + termoBusca + "%"); // Adiciona '%' para buscar substrings
+        return dbExecutor.submit(tarefaBusca);
     }
 
 }

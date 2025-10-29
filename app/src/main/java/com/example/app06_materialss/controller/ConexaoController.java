@@ -145,6 +145,21 @@ public class ConexaoController {
         return executor.submit(usuarioLogar);
     }
 
+    public Future<Boolean> usuarioExcluir(Usuario user) {
+        Callable<Boolean> excluirConta = () -> {
+            if (estado != EstadoConexao.CONECTADO) {
+                throw new IllegalStateException("Cliente não está conectado.");
+            }
+            out.writeObject("UsuarioExcluir");
+            out.flush();
+            in.readObject();
+            out.writeObject(user);
+            out.flush();
+            return (boolean) in.readObject();
+        };
+        return executor.submit(excluirConta);
+    }
+
     public Future<Peca> pecaBusca(int id){
         Callable<Peca> pecaBuscar = () -> {
             if (estado != EstadoConexao.CONECTADO) {
@@ -256,18 +271,6 @@ public class ConexaoController {
                 return null;
             }
     }
-    
-    public boolean usuarioExcluir(Usuario u){
-        try {
-            out.writeObject("UsuarioExcluir");
-            in.readObject();
-            out.writeObject(u);
-            return (boolean) in.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }   
 
     private void trataErro(IOException e) {
         

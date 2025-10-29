@@ -1,5 +1,6 @@
 package com.example.app06_materialss.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -27,7 +28,12 @@ public class AutenticacaoActivity extends AppAutopecaActivity implements Navegac
         });
 
         MaterialToolbar toolbar = findViewById(R.id.autenticacao_toolbar);
-        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        toolbar.setNavigationOnClickListener(v -> {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        });
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()

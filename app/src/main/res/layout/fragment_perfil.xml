@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/perfil_main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_secondary"
+    tools:context=".fragment.PerfilFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/perfil_appbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_theme_secondary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/perfil_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/md_theme_secondary"
+            app:navigationIcon="@drawable/voltar"
+            app:navigationIconTint="@color/md_theme_onPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="Informações do perfil"
+            app:titleTextColor="@color/md_theme_onPrimary" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ImageView
+        android:id="@+id/perfil_imageView_logo"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/perfil_appbar_layout" />
+
+    <View
+        android:id="@+id/perfil_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/md_theme_secondaryFixedDim"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/perfil_imageView_logo" />
+
+    <LinearLayout
+        android:id="@+id/perfil_linearLayout_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/perfil_divider">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome:"
+            android:textSize="20sp"
+            android:textColor="@color/md_theme_onPrimary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/perfil_textView_nome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/md_theme_onPrimary"
+            android:textSize="24sp"
+            tools:text="Nome do Usuário" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="20sp"
+            android:text="Email:"
+            android:textColor="@color/md_theme_onPrimary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/perfil_textView_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/md_theme_onPrimary"
+            android:textSize="24sp"
+            tools:text="usuario@email.com" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Cliente desde:"
+            android:textSize="20sp"
+            android:textColor="@color/md_theme_onPrimary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/perfil_textView_dataCadastro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/md_theme_onPrimary"
+            android:textSize="24sp"
+            tools:text="01/01/2024" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/perfil_button_desconectar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/md_theme_secondaryFixedDim"
+        android:textColor="@color/cardview_dark_background"
+        android:padding="12dp"
+        android:text="Desconectar"
+        app:layout_constraintBottom_toTopOf="@+id/perfil_textView_excluirConta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/perfil_textView_excluirConta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="8dp"
+        android:text="Excluir conta"
+        android:textColor="@color/md_theme_error_highContrast"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

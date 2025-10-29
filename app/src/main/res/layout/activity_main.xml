@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_secondary"
+    android:background="@color/md_theme_secondaryFixed_mediumContrast"
     tools:context=".activity.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
