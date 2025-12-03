@@ -1,4 +1,3 @@
-
 package com.example.app06_materialss.controller;
 import com.example.app06_materialss.BuildConfig;
 
@@ -18,17 +17,22 @@ import java.util.concurrent.Future;
 
 public class ConexaoController {
 
-    public enum EstadoConexao {
-        DESCONECTADO,
-        CONECTANDO,
-        CONECTADO,
-        ERRO
-    }
-
     private static ConexaoController instance;
+
+    private Socket cliente;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
+
+    /* O executador é usado para realizar operações em threads separadas */
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    /* Estado da conexão. Inicia como desconectado */
+    private volatile EstadoConexao estado = EstadoConexao.DESCONECTADO;
 
     private ConexaoController() {}
 
+    /** Retorna a instância única da classe ConexaoController.
+     * @static é possivel chamar mesmo sem o objeto criado.
+     * @synchronized só uma thread pode acessar ao mesmo tempo.*/
     public static synchronized ConexaoController getInstance() {
         if (instance == null) {
             instance = new ConexaoController();
@@ -36,58 +40,42 @@ public class ConexaoController {
         return instance;
     }
 
-    private Socket cliente;
-    private ObjectOutputStream out;
-    private ObjectInputStream in;
-    private Usuario userLogado;
-
-    private final ExecutorService executor = Executors.newSingleThreadExecutor();
-
-    private volatile EstadoConexao estado = EstadoConexao.DESCONECTADO;
-
-    public Usuario getUserLogado() {
-        return userLogado;
+    /* Estados possíveis da conexão */
+    public enum EstadoConexao {
+        DESCONECTADO,
+        CONECTANDO,
+        CONECTADO,
+        ERRO
     }
 
-    public void setUserLogado(Usuario userLogado) {
-        this.userLogado = userLogado;
-    }
-
-    public EstadoConexao getEstado() {
-        return estado;
-    }
-
+    /** @Runnable é uma função que será recebida pelo méthodo  */
     public void executar(Runnable onSuccess, Runnable onError) {
+
+        /* Se ja estiver conectado ele apenas irá rodar o sucesso*/
         if (estado == EstadoConexao.CONECTADO) {
             if (onSuccess != null) onSuccess.run();
             return;
         }
-
-        if (estado == EstadoConexao.CONECTANDO) {
-            return;
-        }
-
+        if (estado == EstadoConexao.CONECTANDO) { return; }
         estado = EstadoConexao.CONECTANDO;
 
+        /* Aqui é onde a conexão é feita, se conectar o estado vira CONECTADO
+           e roda o sucesso, se não roda o erro. */
         executor.execute(() -> {
             try {
-                String ipServidor = BuildConfig.SERVER_HOST_IP;
-
-                cliente = new Socket(ipServidor, 12345);
+                cliente = new Socket(BuildConfig.SERVER_HOST_IP, 12345); // ip e porta do servidor
                 out = new ObjectOutputStream(cliente.getOutputStream());
                 in = new ObjectInputStream(cliente.getInputStream());
 
                 estado = EstadoConexao.CONECTADO;
-                if (onSuccess != null) onSuccess.run();
-
+                if (onSuccess != null) onSuccess.run(); // roda o sucesso
             } catch (IOException e) {
                 e.printStackTrace();
                 estado = EstadoConexao.ERRO;
-                if (onError != null) onError.run();
+                if (onError != null) onError.run(); // roda erro
             }
         });
     }
-
 
     public void desconectar() {
         estado = EstadoConexao.DESCONECTADO;
@@ -115,18 +103,22 @@ public class ConexaoController {
         return executor.submit(pecaListar);
     }
 
+    /* Nome do méthodo chamado nas telas*/
     public Future<Usuario> usuarioLogin(Usuario user){
+        /* Nome da função chamada dentro do executor
+           normalmente o nome méthodo com o verbo no infinitivo*/
         Callable<Usuario> usuarioLogar = () -> {
             if (estado != EstadoConexao.CONECTADO) {
                 throw new IllegalStateException("Cliente não está conectado.");
             }
             out.writeObject("UsuarioLogin");
-            out.flush();
+            out.flush(); // limpa e envia o writeObject
             in.readObject();
             out.writeObject(user);
-            out.flush();
+            out.flush(); // limpa e envia o writeObject
             return (Usuario) in.readObject();
         };
+        /* Onde a operação vai ser excutada */
         return executor.submit(usuarioLogar);
     }
 
@@ -160,20 +152,35 @@ public class ConexaoController {
         return executor.submit(excluirConta);
     }
 
-    public Future<Peca> pecaBusca(int id){
-        Callable<Peca> pecaBuscar = () -> {
+    public Future<Boolean> usuarioEditar(Usuario user) {
+        Callable<Boolean> usaurioEdit = () -> {
             if (estado != EstadoConexao.CONECTADO) {
                 throw new IllegalStateException("Cliente não está conectado.");
             }
-            out.writeObject("PecaBusca");
+            out.writeObject("UsuarioEditar");
             out.flush();
             in.readObject();
-            out.writeObject(id);
+            out.writeObject(user);
             out.flush();
-            return (Peca) in.readObject();
+            return (boolean) in.readObject();
         };
-        return executor.submit(pecaBuscar);
+        return executor.submit(usaurioEdit);
     }
+
+        public Future<Peca> pecaBusca(int id){
+            Callable<Peca> pecaBuscar = () -> {
+                if (estado != EstadoConexao.CONECTADO) {
+                    throw new IllegalStateException("Cliente não está conectado.");
+                }
+                out.writeObject("PecaBusca");
+                out.flush();
+                in.readObject();
+                out.writeObject(id);
+                out.flush();
+                return (Peca) in.readObject();
+            };
+            return executor.submit(pecaBuscar);
+        }
 
     public boolean pecaInserir(Peca p){
         try {

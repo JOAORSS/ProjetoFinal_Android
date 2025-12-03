@@ -31,8 +31,9 @@ import com.google.android.material.snackbar.Snackbar;
 public class MainActivity extends AppAutopecaActivity implements OnSearchBarClickListener {
 
     public ConexaoController ccont;
-    private boolean isConnectionFinished = false;
+
     private boolean isLoginCheckFinished = false;
+    private boolean isConnectionFinished = false;
 
     private BottomNavigationView navBar;
     private SearchView searchView;
@@ -48,7 +49,6 @@ public class MainActivity extends AppAutopecaActivity implements OnSearchBarClic
         super.onCreate(savedInstanceState);
 
         splashScreen.setKeepOnScreenCondition(() -> !isConnectionFinished || !isLoginCheckFinished );
-
         conectaServidor();
         verificarLoginLocal();
 
@@ -161,8 +161,8 @@ public class MainActivity extends AppAutopecaActivity implements OnSearchBarClic
         if (ccont == null) {
             ccont = ConexaoController.getInstance();
         }
-        ccont.executar(
-                () -> runOnUiThread(() -> isConnectionFinished = true),
+        ccont.executar( /* faz uma chamada ao servidor */
+                () -> runOnUiThread(() -> isConnectionFinished = true), /*  */
                 () -> runOnUiThread(() -> {
                     Toast.makeText(this, "Falha na conexão com o servidor!", Toast.LENGTH_LONG).show();
                     isConnectionFinished = true;

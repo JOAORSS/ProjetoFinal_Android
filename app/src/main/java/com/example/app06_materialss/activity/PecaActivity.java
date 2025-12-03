@@ -73,29 +73,41 @@ public class PecaActivity extends AppAutopecaActivity {
         BtnFavoritar.setOnClickListener(v -> {
             if (peca == null) return;
 
-            if (favoritado) {
-                PecaFavorita pecaParaDeletar = new PecaFavorita(peca.getCodpeca(), peca.getNome(), peca.getPreco(), peca.getImagem());
-                executarLocal(
-                        () -> lcont.deletarFavorito(pecaParaDeletar),
-                        resultado -> {
-                            Snackbar snack = Snackbar.make(v, "Removido dos favoritos", Snackbar.LENGTH_SHORT);
-                            snack.setAnchorView(BtnAdicionarAoCarrinho);
-                            snack.show();
-                            atualizarIconeFavorito(false);
+            executarLocal(
+                    () -> lcont.getUsuarioLogado(),
+                    usuarioLogado -> { if (usuarioLogado != null) {
+
+                        if (favoritado) {
+                            PecaFavorita pecaParaDeletar = new PecaFavorita(peca.getCodpeca(), peca.getNome(), peca.getPreco(), peca.getImagem());
+                            executarLocal(
+                                    () -> lcont.deletarFavorito(pecaParaDeletar),
+                                    resultado -> {
+                                        Snackbar snack = Snackbar.make(v, "Removido dos favoritos", Snackbar.LENGTH_SHORT);
+                                        snack.setAnchorView(BtnAdicionarAoCarrinho);
+                                        snack.show();
+                                        atualizarIconeFavorito(false);
+                                    }
+                            );
+                        } else {
+                            PecaFavorita pecaParaSalvar = new PecaFavorita(peca.getCodpeca(), peca.getNome(), peca.getPreco(), peca.getImagem());
+                            executarLocal(
+                                    () -> lcont.inserirFavorito(pecaParaSalvar),
+                                    resultado -> {
+                                        Snackbar snack = Snackbar.make(v, "Adicionado aos favoritos", Snackbar.LENGTH_SHORT);
+                                        snack.setAnchorView(BtnAdicionarAoCarrinho);
+                                        snack.show();
+                                        atualizarIconeFavorito(true);
+                                    }
+                            );
                         }
-                );
-            } else {
-                PecaFavorita pecaParaSalvar = new PecaFavorita(peca.getCodpeca(), peca.getNome(), peca.getPreco(), peca.getImagem());
-                executarLocal(
-                        () -> lcont.inserirFavorito(pecaParaSalvar),
-                        resultado -> {
-                            Snackbar snack = Snackbar.make(v, "Adicionado aos favoritos", Snackbar.LENGTH_SHORT);
-                            snack.setAnchorView(BtnAdicionarAoCarrinho);
-                            snack.show();
-                            atualizarIconeFavorito(true);
+
+                        } else {
+                            Toast.makeText(this, "Faça login para adicionar itens aos favoritos.", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(this, AutenticacaoActivity.class);
+                            startActivity(intent);
                         }
-                );
-            }
+                    }
+            );
         });
     }
 

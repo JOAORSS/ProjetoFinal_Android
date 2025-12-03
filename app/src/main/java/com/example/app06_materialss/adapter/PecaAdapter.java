@@ -57,7 +57,6 @@ public class PecaAdapter extends RecyclerView.Adapter<PecaAdapter.ProdutoViewHol
                 .inflate(R.layout.recycler_peca, parent, false);
         return new ProdutoViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull ProdutoViewHolder holder, int position) {
         Peca peca = listaPeca.get(position);

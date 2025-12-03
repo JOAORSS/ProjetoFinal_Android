@@ -35,16 +35,16 @@ public class AppAutopecaActivity extends AppCompatActivity {
      */
     public <T> void executarComConexao(Callable<Future<T>> operacaoDeRede, Consumer<T> noSucesso) {
         ccont.executar(
-                () -> new Thread(() -> {
-                        try {
-                            final T resultado = operacaoDeRede.call().get();
-                            runOnUiThread(() -> noSucesso.accept(resultado));
-                        } catch (Exception e) {
-                            Log.e("BaseActivity", "Erro executando operação de rede", e);
-                            runOnUiThread(() -> Toast.makeText(this, "Erro na operação.", Toast.LENGTH_SHORT).show());
-                        }
-                    }).start(),
-                () -> runOnUiThread(() -> Toast.makeText(this, "Falha na conexão.", Toast.LENGTH_LONG).show())
+            () -> new Thread(() -> {
+                    try {
+                        final T resultado = operacaoDeRede.call().get();
+                        runOnUiThread(() -> noSucesso.accept(resultado));
+                    } catch (Exception e) {
+                        Log.e("BaseActivity", "Erro executando operação de rede", e);
+                        runOnUiThread(() -> Toast.makeText(this, "Erro na operação.", Toast.LENGTH_SHORT).show());
+                    }
+                }).start(),
+            () -> runOnUiThread(() -> Toast.makeText(this, "Falha na conexão.", Toast.LENGTH_LONG).show())
         );
     }
 

@@ -22,12 +22,15 @@ import com.example.app06_materialss.R;
 import com.example.app06_materialss.adapter.CarrinhoAdapter;
 import com.example.app06_materialss.controller.LocalController;
 import com.example.app06_materialss.entity.PecaCarrinho;
+import com.example.app06_materialss.entity.UsuarioLogado;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import br.com.autopeca360.dominio.Usuario;
 
 public class FinalizarActivity extends AppAutopecaActivity {
 
@@ -87,6 +90,36 @@ public class FinalizarActivity extends AppAutopecaActivity {
                     return false;
                 };
 
+                executarLocal(
+                        () -> lcont.getUsuarioLogado(),
+                        usaurioLogado -> {
+                            if (usaurioLogado != null) {
+                                Usuario salvaEndereco = new Usuario(usaurioLogado.getId());
+                                salvaEndereco.setEndereco(enderecoEditText.getText().toString());
+                                UsuarioLogado userLogado = new UsuarioLogado(
+                                        usaurioLogado.getId(),
+                                        usaurioLogado.getNome(),
+                                        usaurioLogado.getEmail(),
+                                        enderecoEditText.getText().toString(),
+                                        usaurioLogado.getDataCadastro()
+                               );
+                                executarLocal(() -> lcont.deletarUsuarioLogado(), res -> {});
+                                executarLocal(() -> lcont.inserirUsuarioLogado(userLogado), res -> {});
+
+                                executarComConexao(
+                                        () -> ccont.usuarioEditar(salvaEndereco),
+                                        retorno -> {
+                                            if (retorno) {
+                                                Snackbar.make(findViewById(android.R.id.content),
+                                                        "Endereço registrado!",
+                                                             Snackbar.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                );
+                            }
+                        }
+                );
+
                 Intent intent = new Intent(FinalizarActivity.this, CompraConcluidaActivity.class);
                 startActivity(intent);
 
@@ -128,6 +161,7 @@ public class FinalizarActivity extends AppAutopecaActivity {
                         nomeTextView.setText(nome);
                         emailTextView.setText(email);
                         dataCriacaoTextView.setText(dataCriacao);
+                        Toast.makeText(this, usuarioLogado.getEndereco(), Toast.LENGTH_SHORT).show();
                         enderecoEditText.setText(usuarioLogado.getEndereco());
                 }
         );

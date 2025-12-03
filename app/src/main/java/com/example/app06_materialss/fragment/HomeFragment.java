@@ -106,8 +106,7 @@ public class HomeFragment extends Fragment {
 
     private void vinculaViews(View view) {
         recyclerViewPeca = view.findViewById(R.id.home_recyclerView_peca);
-        searchBar = view.findViewById(R.id.home_search_bar);
-    }
+        searchBar = view.findViewById(R.id.home_search_bar);    }
 
     private void configuraRecyclerViewPeca(View view) {
         listaDePecas = new ArrayList<>();

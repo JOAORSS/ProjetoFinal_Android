@@ -123,19 +123,33 @@ public class FavoritosFragment extends Fragment {
         if (baseActivity == null || lcont == null) return;
 
         baseActivity.executarLocal(
-                () -> lcont.listaItensFavoritos(),
-                listaRecebida -> {
-                    if (listaRecebida != null && !listaRecebida.isEmpty()) {
-                        pecaAdapter.atualizarLista(listaRecebida);
-                        recyclerViewFavoritos.setVisibility(View.VISIBLE);
-                        tvEmpty.setVisibility(View.GONE);
+                () -> lcont.getUsuarioLogado(),
+                conectado -> {
+                    if (conectado != null) {
+                        baseActivity.executarLocal(
+                                () -> lcont.listaItensFavoritos(),
+                                listaRecebida -> {
+                                    if (listaRecebida != null && lcont.getUsuarioLogado() != null) {
+                                        pecaAdapter.atualizarLista(listaRecebida);
+                                        recyclerViewFavoritos.setVisibility(View.VISIBLE);
+                                        tvEmpty.setVisibility(View.GONE);
+                                    } else {
+                                        pecaAdapter.atualizarLista(new ArrayList<>());
+                                        recyclerViewFavoritos.setVisibility(View.GONE);
+                                        tvEmpty.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                        );
                     } else {
                         pecaAdapter.atualizarLista(new ArrayList<>());
                         recyclerViewFavoritos.setVisibility(View.GONE);
                         tvEmpty.setVisibility(View.VISIBLE);
+                        Toast.makeText(getContext(), "Faça login para acessar os favoritos.", Toast.LENGTH_SHORT).show();
                     }
+
                 }
         );
+
     }
 }
 
